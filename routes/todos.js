@@ -40,7 +40,7 @@ router.get("/:todoId", (req, res) => {
 
   let existTodo;
 
-  todos.map((v, i) => {
+  todos.map((v) => {
     if (v.id === +todoId) {
       existTodo = v;
     }
