@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createTodo } from "../redux/appThunk";
+import { setNewTodo } from "../redux/appSlice";
 
 const CreateTodo = () => {
-  const [newTodo, setNewTodo] = useState("");
+  const { newTodo } = useSelector((state) => state.appReducer);
   const dispatch = useDispatch();
 
   const onSubmitCreateTodo = (e) => {
@@ -12,16 +12,22 @@ const CreateTodo = () => {
     if (!newTodo) return;
 
     dispatch(createTodo({ title: newTodo }));
+    dispatch(setNewTodo(""));
   };
 
   return (
-    <form onSubmit={onSubmitCreateTodo}>
+    <form className="flex" onSubmit={onSubmitCreateTodo}>
       <input
+        className="px-4 py-2 text-2xl focus:outline-none border-2 focus:border-blue-400"
         type="text"
         value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
+        onChange={(e) => dispatch(setNewTodo(e.target.value))}
       />
-      <input type="submit" value="생성" />
+      <input
+        className="ml-4 px-4 py-3 bg-blue-400 hover:bg-blue-500 active:bg-blue-400 rounded-lg"
+        type="submit"
+        value="생성"
+      />
     </form>
   );
 };
